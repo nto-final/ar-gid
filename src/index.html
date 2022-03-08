@@ -4,13 +4,41 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,user-scalable=no,minimal-ui" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
     <title><%= htmlWebpackPlugin.options.title %></title>
     <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .header{
+            position: absolute;
+            display: block;
+            width: 100%;
+            background-color: white;
+            padding-bottom: 50px;
+            border-radius: 0px 0px 20px 20px;
+            font-family: 'Open Sans';
 
+        }
+        .point{
+            display: flex;
+            justify-content: center;
+        }
     </style>
 </head>
 
 <body>
+    <div class="header">
+        <div class="header-content">
+            <div class="point" id="point">
+                Иди в точку:
+            </div>
+        </div>
+
+    </div>
 </body>
 
 </html>
