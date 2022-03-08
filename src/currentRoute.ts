@@ -1,6 +1,8 @@
 import {Route, Point} from "./types"; 
 import {loadPath, pointIdToPoint, routeIdToRoute} from "./services";
 import {imageTracker} from "./imageTracker";
+import {viewedPoints} from "./index";
+
 
 class CurrentRouteStore {
     private routes: Route[] = [];
@@ -14,8 +16,13 @@ class CurrentRouteStore {
         this.setCurrentRouteId(0);
     }
     private setCurrentRouteId(routeId: number) {
-        if (this.routes.length <= routeId) return
+        if (this.routes.length <= routeId && routeId != 0) {
+            var newPoint = viewedPoints.getNearestNotViewed();
+            if (newPoint == null) return;
+            currentRouteStore.setShortestPathToRoutes(this.currentDestinationPoint!.id, newPoint);
+        }
         this.currentRouteId = routeId;
+        if (routeId != 0) viewedPoints.setViewed(this.currentDestinationPoint!.id);
         pointIdToPoint(this.routes[this.currentRouteId].destinationPointId).then(
             (e) => {
                 this.currentDestinationPoint = e;

@@ -2,6 +2,9 @@ import * as ZapparThree from '@zappar/zappar-threejs';
 import * as THREE from 'three';
 import {pointIdToPoint} from "./services";
 import {currentRouteStore} from "./currentRoute";
+import { ViewedPoints } from './viewedPointsManagement';
+
+
 if (ZapparThree.browserIncompatible()) {
   ZapparThree.browserIncompatibleUI();
   throw new Error('Unsupported browser');
@@ -31,9 +34,15 @@ ZapparThree.glContextSet(renderer.getContext());
 scene.background = camera.backgroundTexture;
 
 manager.onError = (url) => console.log(`There was an error loading ${url}`);
+
+
 const urlParams = new URLSearchParams(window.location.search);
 const points = JSON.parse(urlParams.get("points")!);
-currentRouteStore.setShortestPathToRoutes(parseInt(points![0]), parseInt(points![1]));
+const startingPoint = JSON.parse(urlParams.get("starting_point")!);
+export const viewedPoints = new ViewedPoints(points);
+
+currentRouteStore.setShortestPathToRoutes(parseInt(startingPoint), parseInt(points[0]));
+
 
 const raycaster = new THREE.Raycaster();
 
